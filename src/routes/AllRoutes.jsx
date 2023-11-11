@@ -6,7 +6,7 @@ import { Navbar } from "../components/Navbar"
 export const AllRoutes=()=>{
     return(
         <Routes>
-            <Route path="/" element={<Navbar/>} />
+            <Route path="/" element={<Home/>} />
         </Routes>
     )
 }

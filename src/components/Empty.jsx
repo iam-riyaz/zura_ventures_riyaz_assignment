@@ -1,12 +1,25 @@
-import { FormControl, Button, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
-import { useRef } from "react";
+import { FormControl, Button, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Text } from "@chakra-ui/react";
+import { useRef, useState } from "react";
+import { Navbar } from "./Navbar";
 
 export const Empty = () => {
 
+    const [isEmpty, setIsEmpty]=useState(false)
+    const [projectName , setProjectName]=useState("")
     const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const initialRef = useRef(null)
-  const finalRef = useRef(null)
+  
+
+  const handleClick= ()=>{
+    if(projectName.length!==0){
+       
+      localStorage.setItem("projectName", projectName);
+      console.log({projectName})
+    }else{
+      setIsEmpty(true)
+      console.log({projectName})
+    }
+  }
 
   return (
     <>
@@ -35,33 +48,32 @@ export const Empty = () => {
       </div>
 
       {/* modal */}
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
+      <Modal 
+      isCentered
+      size={"xl"}
+      marginTop="600px"
         isOpen={isOpen}
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
+        <ModalContent >
+          <ModalHeader>Create Project</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
-              <FormLabel>First name</FormLabel>
-              <Input ref={initialRef} placeholder="First name" />
+              <FormLabel>Enter Project Name:</FormLabel>
+              <Input onChange={(e)=>{  setProjectName(e.target.value)}} placeholder="Project Name" />
+              {isEmpty?<Text fontSize="sm" color="red" pl="0.5rem">Project name can't be empty</Text>:null}
             </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>Last name</FormLabel>
-              <Input placeholder="Last name" />
-            </FormControl>
+            
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
-              Save
+            <Button onClick={onClose} color="red">Cancel</Button>
+            <Button  colorScheme="purple" ml={3} onClick={handleClick}>
+              Create
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
