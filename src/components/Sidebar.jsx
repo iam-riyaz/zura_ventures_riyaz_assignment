@@ -23,7 +23,7 @@ export const Sidebar =()=>{
          <li onClick={()=>{
             setIsSelected(1)
          }} className={isSelected==1?"bg-purple-700 rounded-full ":null}>
-            <a href="projects" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <a href="projects" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300  dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">1</span>
                <span class={isSelected==1?"ms-3 text-white":"ms-3"}>Projects</span>
             </a>
@@ -31,7 +31,7 @@ export const Sidebar =()=>{
          <li onClick={()=>{
             setIsSelected(2)
          }} className={isSelected==2?"bg-purple-700 rounded-full":null}>
-            <a href="widget" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <a href="#" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">2</span>
                <span class={isSelected==2?"ms-3 text-white":"ms-3"}>Widget Configration</span>
             </a>
@@ -39,7 +39,7 @@ export const Sidebar =()=>{
          <li onClick={()=>{
             setIsSelected(3)
          }} className={isSelected==3?"bg-purple-700 rounded-full":null}>
-            <a href="deploy" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <a href="deploy" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">3</span>
                <span class={isSelected==3?"ms-3 text-white":"ms-3"}>Deployment</span>
             </a>
@@ -47,7 +47,7 @@ export const Sidebar =()=>{
          <li onClick={()=>{
             setIsSelected(4)
          }} className={isSelected==4?"bg-purple-700 rounded-full text-white!important":null}>
-            <a href="price" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <a href="price" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">4</span>
                <span class={isSelected==4?"ms-3 text-white":"ms-3"}>Pricing</span>
             </a>
