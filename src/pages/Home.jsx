@@ -17,6 +17,7 @@ import { Empty } from "../components/Empty";
 import { useState } from "react";
 
 import { Navbar } from "../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const [isEmpty, setIsEmpty] = useState(false);
@@ -41,6 +42,7 @@ export const Home = () => {
     "Sample Project5",
     "Sample Project6",
   ];
+  const navigate=useNavigate()
 
   return (
     <>
@@ -65,7 +67,7 @@ export const Home = () => {
           <div className="grid grid-cols-3 gap-x-16 gap-y-10 h-54 auto-cols-max  ">
             {titles.map((e) => {
               return (
-                <div className=" cursor-pointer  border-2 border-gray-300 border-solid rounded-xl flex">
+                <div onClick={()=>{navigate("/upload")}} className=" cursor-pointer  border-2 border-gray-300 border-solid rounded-xl flex">
                   <div className=" flex-none bg-indigo-600 w-24 m-2 rounded-xl text-5xl flex justify-center items-center">
                     <p className="font-bold text-white"> SP</p>
                   </div>
