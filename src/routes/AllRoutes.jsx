@@ -4,6 +4,7 @@ import { Sidebar } from "../components/Sidebar"
 import { Navbar } from "../components/Navbar"
 import { Upload } from "../pages/Upload"
 import { Transcript } from "../pages/Transcript"
+import { ConfigPage } from "../pages/ConfigPage"
 
 export const AllRoutes=()=>{
     return(
@@ -11,6 +12,7 @@ export const AllRoutes=()=>{
             <Route path="/" element={<Home/>} />
             <Route path="/projects" element={<Upload/>}/>
             <Route path="transcript" element={<Transcript/>}/>
+            <Route path="configPage" element={<ConfigPage/>}/>
         </Routes>
     )
 }

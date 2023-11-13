@@ -31,7 +31,7 @@ export const Sidebar =()=>{
          <li onClick={()=>{
             setIsSelected(2)
          }} className={isSelected==2?"bg-purple-700 rounded-full":null}>
-            <a href="#" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
+            <a href="configPage" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">2</span>
                <span class={isSelected==2?"ms-3 text-white":"ms-3"}>Widget Configration</span>
             </a>
