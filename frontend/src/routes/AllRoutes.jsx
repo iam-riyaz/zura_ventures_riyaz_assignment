@@ -5,14 +5,14 @@ import { Navbar } from "../components/Navbar"
 import { Upload } from "../pages/Upload"
 import { Transcript } from "../pages/Transcript"
 import { ConfigPage } from "../pages/ConfigPage"
+import { Project } from "../pages/Project"
 
 export const AllRoutes=()=>{
     return(
         <Routes>
             <Route path="/" element={<Home/>} />
-            <Route path="/projects" element={<Upload/>}/>
-            <Route path="transcript" element={<Transcript/>}/>
-            <Route path="configPage" element={<ConfigPage/>}/>
+            <Route path="/projects" element={<Project/>}/>
+            
         </Routes>
     )
 }

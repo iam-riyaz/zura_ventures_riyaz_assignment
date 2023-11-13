@@ -2,11 +2,7 @@ export const UploadEmpty=({onOpen})=>{
     return(
         <>
         <div class=" mb-4 mt-7">
-              <div className="pb-10">
-                <span className="text-3xl font-bold text-purple-600">
-                  Upload
-                </span>
-              </div>
+              
               {/* upload form grid based box section */}
               <div className=" grid grid-cols-3 gap-y-6 gap-x-20 ">
                 {/* sample card */}

@@ -1,8 +1,17 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
+import { Topbar } from "./Topbar"
+import { Upload } from "../pages/Upload"
+import { UploadEmpty } from "./UploadEmpty"
+import { UploadList } from "./UploadList"
+import { ConfigPage } from "../pages/ConfigPage"
 
 export const Sidebar =()=>{
 
-    const [isSelected,setIsSelected]= useState(1)
+   const [activeTab,setActiveTab] = useState("tab1")
+   const [navigateTo,setNavigateTo] = useState("Upload")
+   const [title,setTitle]=useState("Upload")
+
+   //  const [activeTab,setactiveTab]= useState(1)
     return(
         <>
         
@@ -21,35 +30,39 @@ export const Sidebar =()=>{
       </a>
       <ul class="space-y-2 font-medium ">
          <li onClick={()=>{
-            setIsSelected(1)
-         }} className={isSelected==1?"bg-purple-700 rounded-full ":null}>
-            <a href="projects" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300  dark:hover:bg-gray-700 group">
+             setNavigateTo("Upload")
+             setTitle("Upload")
+            setActiveTab("tab1")
+         }} className={activeTab=="tab1"?"bg-purple-700 rounded-full ":null}>
+            <div  class="cursor-pointer flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300  dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">1</span>
-               <span class={isSelected==1?"ms-3 text-white":"ms-3"}>Projects</span>
-            </a>
+               <span class={activeTab==1?"ms-3 text-white":"ms-3"}>Projects</span>
+            </div>
          </li>
          <li onClick={()=>{
-            setIsSelected(2)
-         }} className={isSelected==2?"bg-purple-700 rounded-full":null}>
-            <a href="configPage" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
+            setNavigateTo("Widget Configuration")
+            setTitle("Configuration")
+            setActiveTab("tab2")
+         }} className={activeTab=="tab2"?"bg-purple-700 rounded-full":null}>
+            <div  class="cursor-pointer flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">2</span>
-               <span class={isSelected==2?"ms-3 text-white":"ms-3"}>Widget Configration</span>
-            </a>
+               <span class={activeTab=="tab2"?"ms-3 text-white":"ms-3"}>Widget Configration</span>
+            </div>
          </li>
          <li onClick={()=>{
-            setIsSelected(3)
-         }} className={isSelected==3?"bg-purple-700 rounded-full":null}>
+            setActiveTab(3)
+         }} className={activeTab==3?"bg-purple-700 rounded-full":null}>
             <a href="deploy" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">3</span>
-               <span class={isSelected==3?"ms-3 text-white":"ms-3"}>Deployment</span>
+               <span class={activeTab==3?"ms-3 text-white":"ms-3"}>Deployment</span>
             </a>
          </li>
          <li onClick={()=>{
-            setIsSelected(4)
-         }} className={isSelected==4?"bg-purple-700 rounded-full text-white!important":null}>
+            setActiveTab(4)
+         }} className={activeTab==4?"bg-purple-700 rounded-full text-white!important":null}>
             <a href="price" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">4</span>
-               <span class={isSelected==4?"ms-3 text-white":"ms-3"}>Pricing</span>
+               <span class={activeTab==4?"ms-3 text-white":"ms-3"}>Pricing</span>
             </a>
          </li>
          
@@ -57,6 +70,28 @@ export const Sidebar =()=>{
       </ul>
    </div>
 </aside>
+
+<div class="p-4 sm:ml-64 ">
+          <div class="px-8 pt-4">
+            <div>
+              <Topbar navigateTo={navigateTo} />
+            </div>
+            <div class=" mb-4 mt-7">
+              <div className="flex justify-between ">
+                <p className="text-3xl font-bold text-purple-600">
+                  {title}
+                </p>
+              </div>
+              {activeTab=="tab1"?(<>
+              <Upload setTitle={setTitle} />
+              </>):activeTab=="tab2"?(<>
+              <ConfigPage/>
+              </>):null}
+              
+            </div>
+          </div>
+        </div>
+
 
 
 

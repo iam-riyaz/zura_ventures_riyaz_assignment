@@ -20,11 +20,14 @@ import { Topbar } from "../components/Topbar";
 import { useState } from "react";
 import { UploadEmpty } from "../components/UploadEmpty";
 import { UploadList } from "../components/UploadList";
+import { Transcript } from "./Transcript";
 
-export const Upload = () => {
+export const Upload = ({setTitle}) => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [isEditPage, setIsEditPage] = useState(false)
+  const [isProjectNull,setIsProjectNull]=useState(true)
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -38,19 +41,13 @@ export const Upload = () => {
     }
   };
 
+
+
   return (
     <>
       <div>
-        <Sidebar />
-        <div class="p-4 sm:ml-64 ">
-          <div class="px-8 pt-4">
-            <div>
-              <Topbar />
-            </div>
-            <UploadEmpty onOpen={onOpen}/>
-            <UploadList onOpen={onOpen}/>
-          </div>
-        </div>
+            {isProjectNull?<UploadEmpty onOpen={onOpen}/>:
+            <UploadList setTitle={setTitle} onOpen={onOpen}/>}
       </div>
 
       {/*modal  */}

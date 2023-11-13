@@ -1,4 +1,4 @@
-export const Topbar = () => {
+export const Topbar = ({navigateTo}) => {
   return (
     <>
       <div>
@@ -20,7 +20,7 @@ export const Topbar = () => {
               /Sample project
             </div>{" "}
             <div className="px-1 text-center font-bold text-purple-600 tracking-wide">
-              /Upload
+              /{navigateTo}
             </div>
           </div>
           <div className="flex">
