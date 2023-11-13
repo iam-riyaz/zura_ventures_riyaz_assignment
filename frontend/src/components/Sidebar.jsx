@@ -33,10 +33,10 @@ export const Sidebar =()=>{
              setNavigateTo("Upload")
              setTitle("Upload")
             setActiveTab("tab1")
-         }} className={activeTab=="tab1"?"bg-purple-700 rounded-full ":null}>
+         }} className={activeTab=="tab1"?"bg-purple-700 rounded-full  ":null}>
             <div  class="cursor-pointer flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300  dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">1</span>
-               <span class={activeTab==1?"ms-3 text-white":"ms-3"}>Projects</span>
+               <span class={activeTab=="tab1"?"ms-3 text-white":"ms-3"}>Projects</span>
             </div>
          </li>
          <li onClick={()=>{
@@ -52,7 +52,7 @@ export const Sidebar =()=>{
          <li onClick={()=>{
             setActiveTab(3)
          }} className={activeTab==3?"bg-purple-700 rounded-full":null}>
-            <a href="deploy" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
+            <a  class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">3</span>
                <span class={activeTab==3?"ms-3 text-white":"ms-3"}>Deployment</span>
             </a>
@@ -60,7 +60,7 @@ export const Sidebar =()=>{
          <li onClick={()=>{
             setActiveTab(4)
          }} className={activeTab==4?"bg-purple-700 rounded-full text-white!important":null}>
-            <a href="price" class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
+            <a  class="flex items-center p-2 text-gray-900 rounded-full dark:text-white hover:bg-purple-300 dark:hover:bg-gray-700 group">
                <span class=" inline-block bg-gray-300 border-2 border text-black p-1 px-3 rounded-full ">4</span>
                <span class={activeTab==4?"ms-3 text-white":"ms-3"}>Pricing</span>
             </a>
