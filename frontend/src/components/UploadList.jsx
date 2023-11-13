@@ -1,15 +1,50 @@
 import { useState } from "react";
 import { Transcript } from "../pages/Transcript";
+import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react";
+import axios from "axios";
 
-export const UploadList = ({ onOpen,setTitle }) => {
+export const UploadList = ({setUploads,setTitle,uploads,setNavigateTo }) => {
   const [isEditPage, setIsEditPage] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const projectId = localStorage.getItem("projectId");
+  const userId = localStorage.getItem("userId");
+
+  const handleClick = () => {
+    if (name.length !== 0 && description.length !== 0) {
+      axios
+        .post("http://localhost:3000/login/uploads/create", {
+          projectId,
+          _id: userId,
+          name,
+          description,
+        })
+        .then((res) => {
+          console.log(res)
+          setUploads(res.data.uploads)
+          onClose()
+        })
+        .catch((err) => {console.log(err)});
+      
+    } else {
+      setIsEmpty(true);
+      console.log({ projectName: name });
+    }
+  };
+
   return (
     <>
-      {isEditPage ? (
+      {isEditPage ? 
+      (
         <div class=" mb-4 mt-7">
         <Transcript setIsEditPage={setIsEditPage} setTitle={setTitle} />
         </div>
-      ) : (
+      ) : 
+      (
         <div class=" mb-4 mt-7">
           {/* cards */}
           <div className="flex ">
@@ -75,19 +110,20 @@ export const UploadList = ({ onOpen,setTitle }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class=" border-b dark:border-gray-700 text-gray-700">
+                  {uploads.map((e)=>(
+                    <tr class=" border-b dark:border-gray-700 text-gray-700">
                     <th
                       scope="row"
                       class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      Sample project 1
+                      {e.name}
                     </th>
                     <th class="px-6 py-4">12 Jun 24 | 15:67</th>
                     <th class="px-6 py-4">Done</th>
 
                     <th class="px-6 py-4 flex cursor-pointer">
                       <div
-                        onClick={() => {setIsEditPage(true),setTitle("Transcript")}}
+                        onClick={() => {setIsEditPage(true),setTitle("Transcript"),setNavigateTo("Transcript")}}
                         class="font-medium   text-gray-800  border border-gray-150 px-4  py-2 rounded-l-lg "
                       >
                         Edit
@@ -97,12 +133,63 @@ export const UploadList = ({ onOpen,setTitle }) => {
                       </div>
                     </th>
                   </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       )}
+
+       {/*modal  */}
+       <Modal
+        isCentered
+        size={"lg"}
+        marginTop="600px"
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Upload</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Name</FormLabel>
+              <Input
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+                placeholder="Name"
+              />
+              {isEmpty ? (
+                <Text fontSize="sm" color="red" pl="0.5rem">
+                  {" "}
+                  name can't be empty
+                </Text>
+              ) : null}
+              <FormLabel pt={2}>Description</FormLabel>
+              <Input
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                placeholder="Description"
+              />
+              {isEmpty ? (
+                <Text fontSize="sm" color="red" pl="0.5rem">
+                  description name can't be empty
+                </Text>
+              ) : null}
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button w={20} colorScheme="purple" ml={3} onClick={handleClick}>
+              Save
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

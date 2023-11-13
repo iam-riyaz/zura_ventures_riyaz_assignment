@@ -83,7 +83,7 @@ export const Sidebar =()=>{
                 </p>
               </div>
               {activeTab=="tab1"?(<>
-              <Upload setTitle={setTitle} />
+              <Upload setTitle={setTitle} setNavigateTo={setNavigateTo} />
               </>):activeTab=="tab2"?(<>
               <ConfigPage/>
               </>):null}

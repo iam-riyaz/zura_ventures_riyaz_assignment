@@ -1,8 +1,9 @@
 import { FormControl, Button, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Text } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { Navbar } from "./Navbar";
+import axios from "axios";
 
-export const Empty = () => {
+export const Empty = ({setProjects}) => {
 
     const [isEmpty, setIsEmpty]=useState(false)
     const [projectName , setProjectName]=useState("")
@@ -13,7 +14,15 @@ export const Empty = () => {
   const handleClick= ()=>{
     if(projectName.length!==0){
        
-      localStorage.setItem("projectName", projectName);
+      // localStorage.setItem("projectName", projectName);
+      const email = localStorage.getItem("loginEmail");
+      axios
+        .post("http://localhost:3000/projects/create", {
+          email: email,
+          projectName: projectName,
+        })
+        .then((res) => {setProjects(res.data.projects); onClose()})
+        .catch((err) => { console.log({err})});
       console.log({projectName})
     }else{
       setIsEmpty(true)
@@ -30,7 +39,7 @@ export const Empty = () => {
         <div className=" flex flex-col justify-center  pt-10 ">
           <img className="h-48" src="/cuate.svg" alt="" />
           <div className="flex justify-center p-4">
-            <p className=" text-gray-400 w-1/2">
+            <p className=" text-justify text-gray-400 w-1/2">
               Welcome to our latest project, the Interactive Task Management
               App! In today's fast-paced world, staying organized and managing
               tasks efficiently is more crucial than ever. Our new app aims to

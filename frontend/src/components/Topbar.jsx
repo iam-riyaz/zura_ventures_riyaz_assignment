@@ -1,10 +1,28 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 export const Topbar = ({navigateTo}) => {
+  const projectName= localStorage.getItem('projectName');
+  const projectId= localStorage.getItem("projectId")
+  const userId= localStorage.getItem('userId')
+  const [uploads,setUploads]=useState([])
+  const navigate= useNavigate()
+
+
+  useEffect(()=>{
+         axios.get("http://localhost:3000/login",{}).then((res)=>{}).catch((err)=>{})
+  },[])
   return (
     <>
       <div>
         <div className="flex justify-between">
-          <div className="flex items-center">
+          <div className="flex items-center ">
             <svg
+              className="cursor-pointer"
+              onClick={(e)=>
+                window.location.href("http://localhost:5173/")
+              }
               width="18"
               height="18"
               viewBox="0 0 44 38"
@@ -17,7 +35,7 @@ export const Topbar = ({navigateTo}) => {
               />
             </svg>{" "}
             <div className=" px-1 text-center font-bold text-gray-500 tracking-wide ">
-              /Sample project
+              /{projectName}
             </div>{" "}
             <div className="px-1 text-center font-bold text-purple-600 tracking-wide">
               /{navigateTo}

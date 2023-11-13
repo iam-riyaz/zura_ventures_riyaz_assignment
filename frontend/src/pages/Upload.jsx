@@ -17,37 +17,75 @@ import { Navbar } from "../components/Navbar";
 import { Sidebar } from "../components/Sidebar";
 import { Topbar } from "../components/Topbar";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UploadEmpty } from "../components/UploadEmpty";
 import { UploadList } from "../components/UploadList";
 import { Transcript } from "./Transcript";
+import axios from "axios";
 
-export const Upload = ({setTitle}) => {
+export const Upload = ({ setTitle, setNavigateTo }) => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [isEditPage, setIsEditPage] = useState(false)
-  const [isProjectNull,setIsProjectNull]=useState(true)
+  const [isEditPage, setIsEditPage] = useState(false);
+  const [uploads, setUploads] = useState([]);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const projectId = localStorage.getItem("projectId");
+  const userId = localStorage.getItem("userId");
+
   const handleClick = () => {
     if (name.length !== 0 && description.length !== 0) {
-      localStorage.setItem("projectName", name);
-      console.log({ name, description });
+      axios
+        .post("http://localhost:3000/login/uploads/create", {
+          projectId,
+          _id: userId,
+          name,
+          description,
+        })
+        .then((res) => {
+          setUploads(res.data.projects.uploads)
+          onClose()
+        })
+        .catch((err) => {console.log(err)});
+      
     } else {
       setIsEmpty(true);
       console.log({ projectName: name });
     }
   };
 
-
+  useEffect(() => {
+    axios
+      .post("http://localhost:3000/login/uploads", {
+        _id: userId,
+        projectId: projectId,
+      })
+      .then((res) => {
+        setUploads(res.data.uploads);
+      })
+      .catch((err) => {});
+  }, []);
 
   return (
     <>
       <div>
-            {isProjectNull?<UploadEmpty onOpen={onOpen}/>:
-            <UploadList setTitle={setTitle} onOpen={onOpen}/>}
+        {uploads.length == 0 ? (
+          <UploadEmpty
+            uploads={uploads}
+            setUploads={setUploads}
+            
+          />
+        ) : (
+          <UploadList
+            setTitle={setTitle}
+            uploads={uploads}
+            setNavigateTo={setNavigateTo}
+            setUploads={setUploads}
+            
+          />
+        )}
       </div>
 
       {/*modal  */}
