@@ -1,13 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Transcript } from "../pages/Transcript";
-import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import axios from "axios";
 
-export const UploadList = ({setUploads,setTitle,uploads,setNavigateTo }) => {
+export const UploadList = ({
+  setUploads,
+  setTitle,
+  uploads,
+  setNavigateTo,
+}) => {
   const [isEditPage, setIsEditPage] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [editDescription, setEditDescription] = useState(
+    localStorage.getItem("editDescription")
+  );
+  const [uploadId, setUploadId] = useState("");
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -24,27 +47,59 @@ export const UploadList = ({setUploads,setTitle,uploads,setNavigateTo }) => {
           description,
         })
         .then((res) => {
-          console.log(res)
-          setUploads(res.data.uploads)
-          onClose()
+          console.log(res);
+          setUploads(res.data.uploads);
+          onClose();
         })
-        .catch((err) => {console.log(err)});
-      
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       setIsEmpty(true);
       console.log({ projectName: name });
     }
   };
 
+  const handleDelete = () => {
+    const uploadId = localStorage.getItem("uploadId");
+    const userId = localStorage.getItem("userId");
+    const projectId = localStorage.getItem("projectId");
+
+    axios
+      .post("http://localhost:3000/login/uploads/delete", {
+        _id: userId,
+        projectId,
+        uploadId,
+      })
+      .then((res) => {
+        console.log(res.data);
+
+        setUploads(res.data.uploads);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    setEditDescription(localStorage.getItem("editDescription"));
+    console.log({ editDescription });
+  }, []);
+
   return (
     <>
-      {isEditPage ? 
-      (
+      {isEditPage ? (
         <div class=" mb-4 mt-7">
-        <Transcript setIsEditPage={setIsEditPage} setTitle={setTitle} />
+          <Transcript
+            setIsEditPage={setIsEditPage}
+            editDescription={editDescription}
+            setEditDescription={setEditDescription}
+            setUploads={setUploads}
+            uploads={uploads}
+            setTitle={setTitle}
+          />
         </div>
-      ) : 
-      (
+      ) : (
         <div class=" mb-4 mt-7">
           {/* cards */}
           <div className="flex ">
@@ -110,29 +165,41 @@ export const UploadList = ({setUploads,setTitle,uploads,setNavigateTo }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {uploads.map((e)=>(
+                  {uploads.map((e) => (
                     <tr class=" border-b dark:border-gray-700 text-gray-700">
-                    <th
-                      scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      {e.name}
-                    </th>
-                    <th class="px-6 py-4">12 Jun 24 | 15:67</th>
-                    <th class="px-6 py-4">Done</th>
-
-                    <th class="px-6 py-4 flex cursor-pointer">
-                      <div
-                        onClick={() => {setIsEditPage(true),setTitle("Transcript"),setNavigateTo("Transcript")}}
-                        class="font-medium   text-gray-800  border border-gray-150 px-4  py-2 rounded-l-lg "
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
-                        Edit
-                      </div>
-                      <div class="font-medium text-red-600 dark:text-blue-500  border border-gray-150 px-4  py-2 rounded-r-lg ">
-                        delete
-                      </div>
-                    </th>
-                  </tr>
+                        {e.name}
+                      </th>
+                      <th class="px-6 py-4">12 Jun 24 | 15:67</th>
+                      <th class="px-6 py-4">Done</th>
+
+                      <th class="px-6 py-4 flex cursor-pointer">
+                        <div
+                          onClick={() => {
+                            setIsEditPage(true),
+                              setTitle("Transcript"),
+                              setNavigateTo("Transcript");
+                            setEditDescription(e.description);
+                            localStorage.setItem("uploadId", e._id);
+                          }}
+                          class="font-medium   text-gray-800  border border-gray-150 px-4  py-2 rounded-l-lg "
+                        >
+                          Edit
+                        </div>
+                        <div
+                          onClick={() => {
+                            localStorage.setItem("uploadId", e._id);
+                            handleDelete();
+                          }}
+                          class="font-medium text-red-600 dark:text-blue-500  border border-gray-150 px-4  py-2 rounded-r-lg "
+                        >
+                          Delete
+                        </div>
+                      </th>
+                    </tr>
                   ))}
                 </tbody>
               </table>
@@ -141,8 +208,8 @@ export const UploadList = ({setUploads,setTitle,uploads,setNavigateTo }) => {
         </div>
       )}
 
-       {/*modal  */}
-       <Modal
+      {/*modal  */}
+      <Modal
         isCentered
         size={"lg"}
         marginTop="600px"
