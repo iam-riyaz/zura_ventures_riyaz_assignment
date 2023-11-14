@@ -11,7 +11,7 @@ export const Topbar = ({navigateTo}) => {
 
 
   useEffect(()=>{
-         axios.get("http://localhost:3000/login",{}).then((res)=>{}).catch((err)=>{})
+         axios.get("https://zura-backend.onrender.com/login",{}).then((res)=>{}).catch((err)=>{})
   },[])
   return (
     <>

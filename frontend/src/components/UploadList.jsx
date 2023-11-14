@@ -40,7 +40,7 @@ export const UploadList = ({
   const handleClick = () => {
     if (name.length !== 0 && description.length !== 0) {
       axios
-        .post("http://localhost:3000/login/uploads/create", {
+        .post("https://zura-backend.onrender.com/login/uploads/create", {
           projectId,
           _id: userId,
           name,
@@ -66,7 +66,7 @@ export const UploadList = ({
     const projectId = localStorage.getItem("projectId");
 
     axios
-      .post("http://localhost:3000/login/uploads/delete", {
+      .post("https://zura-backend.onrender.com/login/uploads/delete", {
         _id: userId,
         projectId,
         uploadId,

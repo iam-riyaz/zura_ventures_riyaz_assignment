@@ -33,7 +33,7 @@ export const Transcript = ({
     localStorage.setItem("editDescription", inputValue);
 
     axios
-      .post("http://localhost:3000/login/uploads/update", {
+      .post("https://zura-backend.onrender.com/login/uploads/update", {
         _id: userId,
         uploadId,
         projectId,

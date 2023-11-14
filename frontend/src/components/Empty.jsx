@@ -17,7 +17,7 @@ export const Empty = ({setProjects}) => {
       // localStorage.setItem("projectName", projectName);
       const email = localStorage.getItem("loginEmail");
       axios
-        .post("http://localhost:3000/projects/create", {
+        .post("https://zura-backend.onrender.com/projects/create", {
           email: email,
           projectName: projectName,
         })

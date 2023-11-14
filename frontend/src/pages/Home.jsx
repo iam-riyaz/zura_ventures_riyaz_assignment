@@ -12,6 +12,7 @@ import {
   ModalOverlay,
   useDisclosure,
   Text,
+  Spinner,
 } from "@chakra-ui/react";
 import { Empty } from "../components/Empty";
 import { useEffect, useState } from "react";
@@ -25,13 +26,14 @@ export const Home = () => {
   const [projectName, setProjectName] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [projects, setProjects] = useState([]);
+  const [isLoading,setIsloading] =useState(false)
 
   const handleClick = () => {
     if (projectName.length !== 0) {
       
       const email = localStorage.getItem("loginEmail");
       axios
-        .post("http://localhost:3000/projects/create", {
+        .post("https://zura-backend.onrender.com/projects/create", {
           email: email,
           projectName: projectName,
         })
@@ -47,14 +49,19 @@ export const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+
+
     let loginEmail = localStorage.getItem("loginEmail");
 
     if (loginEmail) {
+      setIsloading(true)
+      
       axios
-        .post("http://localhost:3000/login", { email: loginEmail })
+        .post("https://zura-backend.onrender.com/login", { email: loginEmail })
         .then((res) => {
           setProjects(res.data.projects);
           localStorage.setItem("userId",res.data._id)
+          setIsloading(false)
         })
         .catch((err) => {
           console.log({ err });
@@ -62,14 +69,17 @@ export const Home = () => {
     } else {
       const userInput = window.prompt("Enter Your Email:");
       if (userInput !== null) {
+
+        setIsloading(true)
         axios
-          .post("http://localhost:3000/login", { email: userInput })
+          .post("https://zura-backend.onrender.com/login", { email: userInput })
           .then((res) => {
             const email = res.data.email;
             setProjects(res.data.projects);
             console.log(res.data);
             localStorage.setItem("loginEmail", email);
             localStorage.setItem("userId",res.data._id)
+            setIsloading(false)
           })
           .catch((err) => {
             console.log({ error: err });
@@ -81,7 +91,9 @@ export const Home = () => {
   return (
     <>
       <Navbar />
-      <div className="px-40">
+      {isLoading?
+      <div className="flex justify-center flex-col items-center"> <Spinner zIndex="23" size="xl" thickness="4px" color='purple.700' /> <h3>please wait while backend is starting</h3> </div>
+      :<div className="px-40">
         {projects.length != 0 ? (
           <div>
             <div>
@@ -180,7 +192,8 @@ export const Home = () => {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </div>
+        
+      </div>}
     </>
   );
 };

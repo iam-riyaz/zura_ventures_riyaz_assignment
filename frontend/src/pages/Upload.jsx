@@ -38,7 +38,7 @@ export const Upload = ({ setTitle, setNavigateTo }) => {
   const handleClick = () => {
     if (name.length !== 0 && description.length !== 0) {
       axios
-        .post("http://localhost:3000/login/uploads/create", {
+        .post("https://zura-backend.onrender.com/login/uploads/create", {
           projectId,
           _id: userId,
           name,
@@ -58,7 +58,7 @@ export const Upload = ({ setTitle, setNavigateTo }) => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:3000/login/uploads", {
+      .post("https://zura-backend.onrender.com/login/uploads", {
         _id: userId,
         projectId: projectId,
       })

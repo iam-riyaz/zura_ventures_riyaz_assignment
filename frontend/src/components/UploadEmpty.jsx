@@ -18,7 +18,7 @@ export const UploadEmpty = ({ setUploads,  }) => {
   const handleClick = () => {
     if (name.length !== 0 && description.length !== 0) {
       axios
-        .post("http://localhost:3000/login/uploads/create", {
+        .post("https://zura-backend.onrender.com/login/uploads/create", {
           projectId,
           _id: userId,
           name,
