@@ -11,11 +11,11 @@ const app = express();
 app.use(express.json());
 app.use(cors())
 
-app.post("/", async (req, res) => {
+app.get("/", async (req, res) => {
   try {
-    const users= await User.find()
+    
 
-    res.status(200).send(users);
+    res.status(200).send("route si wokring");
   } catch {
     res.status(404).send("route is not working");
   }
