@@ -10,10 +10,10 @@ export const loginController = async (req, res) => {
     console.log({ user });
     if (user == null) {
       console.log("user not found");
-      user = new User({ email });
-      await user.save();
+     const newUser = new User({ email });
+      await newUser.save();
 
-      res.status(201).send(user);
+      res.status(201).send(newUser);
     } else {
       res.status(200).send(user);
     }
